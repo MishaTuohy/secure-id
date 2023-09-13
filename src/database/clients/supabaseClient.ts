@@ -1,27 +1,29 @@
 import { createClient } from '@supabase/supabase-js';
 import { DbClient } from '..';
 
-export class SupabaseClient implements DbClient {
-    private supabase: any;
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANONYMOUS_KEY';
 
-    constructor(supabaseUrl: string, supabaseKey: string) {
-        this.supabase = createClient(supabaseUrl, supabaseKey);
-    }
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    async connect(): Promise<void> {
-        // Since Supabase client initializes a connection upon creation,
-        // this can be left empty or you can add any initialization steps if necessary.
-    }
+const SupabaseClient: DbClient = {
+  async connect() {
+    // Supabase might not require explicit connect calls like traditional databases.
+    // But if there's any initialization or health-check required, it can be added here.
+  },
 
-    async query(queryString: string, parameters?: any[]): Promise<any> {
-        // A simplified query example. Adjust based on your specific needs.
-        const { data, error } = await this.supabase.from('your_table_name').select(queryString);
-        if (error) throw error;
-        return data;
-    }
+  async query<TResult = any>(queryString: string, parameters?: any[]) {
+    const { data, error } = await supabase.from(queryString).select('*');
+    if (error) throw error;
+    return data as TResult;
+  },
 
-    async disconnect(): Promise<void> {
-        // Supabase may not have a direct method to "disconnect" like traditional databases,
-        // but you can perform any cleanup or finalization tasks here if needed.
-    }
-}
+  async command(commandString: string, parameters?: any[]) {
+    // Assuming commandString is the table name and parameters contain the data to insert.
+    // This is a simplistic example; you might have to parse commandString for more complex operations.
+    const { error } = await supabase.from(commandString).insert(parameters);
+    if (error) throw error;
+  }
+};
+
+export default SupabaseClient;
