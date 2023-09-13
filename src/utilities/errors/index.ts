@@ -1,12 +1,7 @@
 import { CustomErrorBase } from "./types";
 
 export function createCustomError(name: string, message: string, statusCode: number, isOperational: boolean = true): CustomErrorBase {
-    return {
-        name,
-        message,
-        statusCode,
-        isOperational
-    };
+    return { name, message, statusCode, isOperational };
 }
 
 export const NotFoundError = (message: string = "Resource not found") => createCustomError("NotFoundError", message, 404);
