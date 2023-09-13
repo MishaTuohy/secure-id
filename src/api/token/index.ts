@@ -1,17 +1,16 @@
 import express, { Router } from 'express';
-import { TokenService } from './token.service';
+import { isValidToken, issueTokenForUser } from './token.service';
 
 const tokenRouter: Router = express.Router();
-const tokenService: TokenService = new TokenService();
 
 tokenRouter.post('/issue', (req, res) => {
-    const response = tokenService.issueTokenForUser("someUserId");
+    const response = issueTokenForUser("someUserId");
     res.send(response);
 });
 
 tokenRouter.get('/verify/:token', (req, res) => {
     const token = req.params.token;
-    const isValid = tokenService.isValidToken(token);
+    const isValid = isValidToken(token);
     if (isValid) {
         res.send("Token is valid");
     } else {

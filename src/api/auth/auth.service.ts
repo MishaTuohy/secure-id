@@ -1,17 +1,9 @@
-import { AuthRepository } from './auth.repository';
+import { loginUser , logoutUser } from './auth.repository';
 
-export class AuthService {
-    private authRepo: AuthRepository;
+export function loginUserAndGetToken(username: string, password: string): string {
+    return loginUser(username, password);
+}
 
-    constructor() {
-        this.authRepo = new AuthRepository();
-    }
-
-    loginUserAndGetToken(username: string, password: string): string {
-        return this.authRepo.loginUser(username, password);
-    }
-
-    logoutUserByToken(token: string): boolean {
-        return this.authRepo.logoutUser(token);
-    }
+export function logoutUserByToken(token: string): boolean {
+    return logoutUser(token);
 }

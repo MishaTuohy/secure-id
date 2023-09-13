@@ -1,9 +1,7 @@
-export class TokenRepository {
-    issueToken(userId: string): string {
-        return "Not Implemented";
-    }
+export function issueToken(userId: string): string {
+    return "Not Implemented";
+}
 
-    verifyToken(token: string): boolean {
-        return false;
-    }
+export function verifyToken(token: string): boolean {
+    return false;
 }

@@ -1,17 +1,9 @@
-import { TokenRepository } from './token.repository';
+import { issueToken, verifyToken } from "./token.repository";
 
-export class TokenService {
-    private tokenRepo: TokenRepository;
+export function issueTokenForUser(userId: string): string {
+    return issueToken(userId);
+}
 
-    constructor() {
-        this.tokenRepo = new TokenRepository();
-    }
-
-    issueTokenForUser(userId: string): string {
-        return this.tokenRepo.issueToken(userId);
-    }
-
-    isValidToken(token: string): boolean {
-        return this.tokenRepo.verifyToken(token);
-    }
+export function isValidToken(token: string): boolean {
+    return verifyToken(token);
 }
