@@ -1,5 +1,6 @@
 import { PostgrestSingleResponse, SupabaseClient, SupabaseClientOptions } from "@supabase/supabase-js";
 import { DBResponse, DbClient } from "..";
+import { UnauthorizedError, NotFoundError, createCustomError, InternalServerError, ProjectPausedError, ProjectGatewayTimeoutError } from "../../utilities/errors";
 
 export class SupabaseDbClient implements DbClient {
   private client: SupabaseClient;
@@ -20,15 +21,19 @@ export class SupabaseDbClient implements DbClient {
 
   private transformResponse<T>(response: PostgrestSingleResponse<T>): DBResponse<T> {
     if (response.error) {
-      return {
-        error: {
-          message: response.error.message,
-          code: response.error.code,
-          details: response.error.details,
-          hint: response.error.hint
-        }
-      };
-    } 
+      switch (response.error.code) {
+        case '404': 
+          throw NotFoundError(response.error.message);
+        case '401': 
+          throw UnauthorizedError(response.error.message);
+        case '540':
+          throw ProjectPausedError(response.error.message);
+        case '544':
+          throw ProjectGatewayTimeoutError(response.error.message);
+        default: 
+          throw InternalServerError(response.error.message);
+      }
+    }
     return { data: response.data };
   }
 }
