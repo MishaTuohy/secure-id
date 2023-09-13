@@ -2,6 +2,9 @@
   "name": "secure-id",
   "module": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.4",
     "@types/cors": "^2.8.14",
