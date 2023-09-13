@@ -6,14 +6,12 @@ import router from './api/router';
 import corsOptions from './config/cors.config';
 import cookieConfig from './config/cookies.config';
 import helmetConfig from './config/helmet.config';
-import { rateLimiter } from './middleware/rate-limiter';
 
 const app: Express = express();
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(rateLimiter);
 app.use(cookieParser(cookieConfig.secret));
 app.use(helmet(helmetConfig));
 
