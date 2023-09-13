@@ -1,4 +1,4 @@
-import { JsonObject } from "../../types/json";
+import { JsonObject } from "../../api/types";
 
 export interface ILogger {
   error(message: string, meta?: Error | JsonObject): void;
