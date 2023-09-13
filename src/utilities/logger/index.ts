@@ -18,6 +18,4 @@ const createLogger = (): ILogger => {
     };
 };
 
-const logger: ILogger = createLogger();
-
-export { logger };
+export const logger: ILogger = createLogger();
