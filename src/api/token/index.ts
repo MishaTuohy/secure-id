@@ -1,10 +1,5 @@
 import express, { Router } from 'express';
-import { 
-    issueTokenForUser, 
-    isValidToken, 
-    refreshToken, 
-    revokeToken 
-} from './token.service';
+import { issueTokenForUser, isValidToken, refreshToken, revokeToken } from './token.service';
 
 const tokenRouter: Router = express.Router();
 

@@ -1,40 +1,60 @@
 import express, { Router } from 'express';
 import { 
-    getUserProfile, 
-    updateUserProfile,
-    deleteUser
+    getUserById, 
+    createUser, 
+    updateUserById,
+    deleteUserById,
+    getUserRolesById,
+    assignRoleToUser,
+    removeRoleFromUser
 } from './user.service';
 
 const userRouter: Router = express.Router();
 
-// Get user profile
-userRouter.get('/profile', (req, res) => {
-    const token = req.headers['authorization'];
-    if (!token) return res.status(400).send("Authorization header missing");
-    
-    const userProfile = getUserProfile(token);
+userRouter.post('/', (req, res) => {
+    const userData = req.body;
+    const newUser = createUser(userData);
+    res.send(newUser);
+});
+
+userRouter.get('/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const userProfile = getUserById(userId);
     res.send(userProfile);
 });
 
-// Update user profile
-userRouter.put('/profile', (req, res) => {
-    const token = req.headers['authorization'];
+userRouter.put('/:userId', (req, res) => {
+    const userId = req.params.userId;
     const profileData = req.body;
-
-    if (!token) return res.status(400).send("Authorization header missing");
-
-    const updatedProfile = updateUserProfile(token, profileData);
+    const updatedProfile = updateUserById(userId, profileData);
     res.send(updatedProfile);
 });
 
-// Delete a user
-userRouter.delete('/', (req, res) => {
-    const token = req.headers['authorization'];
-    if (!token) return res.status(400).send("Authorization header missing");
-
-    const isDeleted = deleteUser(token);
+userRouter.delete('/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const isDeleted = deleteUserById(userId);
     if (isDeleted) res.send("User deleted successfully");
     else res.send("Not Implemented");
+});
+
+userRouter.get('/:userId/roles', (req, res) => {
+    const userId = req.params.userId;
+    const roles = getUserRolesById(userId);
+    res.send(roles);
+});
+
+userRouter.post('/:userId/roles', (req, res) => {
+    const userId = req.params.userId;
+    const roles = req.body.roles;
+    const assignmentStatus = assignRoleToUser(userId, roles);
+    res.send(assignmentStatus);
+});
+
+userRouter.delete('/:userId/roles/:roleId', (req, res) => {
+    const userId = req.params.userId;
+    const roleId = req.params.roleId;
+    const removalStatus = removeRoleFromUser(userId, roleId);
+    res.send(removalStatus);
 });
 
 export { userRouter };
