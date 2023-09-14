@@ -1,5 +1,6 @@
 export interface Permission {
-  permissionId: string | number;
+  id: number;
   permissionName: string;
   description?: string;
+  createdAt: Date;
 }

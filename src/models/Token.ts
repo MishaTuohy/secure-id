@@ -1,10 +1,10 @@
 export interface Token {
-  tokenId: string | number;
-  userId: string | number;
+  id: string;
+  userId: string;
   accessToken: string;
   refreshToken?: string;
   expiryDate: Date;
   tokenType: string;
-  createdAt: Date;
   isRevoked: boolean;
+  createdAt: Date;
 }

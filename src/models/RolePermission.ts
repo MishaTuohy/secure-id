@@ -1,5 +1,6 @@
-interface RolePermission {
-  rolePermissionId: string | number;
-  roleId: string | number;
-  permissionId: string | number;
+export interface RolePermission {
+  id: number;
+  roleId: number;
+  permissionId: number;
+  createdAt: Date;
 }

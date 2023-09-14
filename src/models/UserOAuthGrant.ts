@@ -1,7 +1,7 @@
 export interface UserOAuthGrant {
-  grantId: string | number;
-  userId: string | number;
-  clientId: string | number;
+  id: number;
+  userId: number;
+  clientId: number;
   scopes: string;
   createdAt: Date;
 }

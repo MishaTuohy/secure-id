@@ -1,11 +1,8 @@
 export interface User {
-  userId: string | number;
-  username: string;
+  id: number;
   email: string;
   passwordHash: string;
-  firstName?: string;
-  lastName?: string;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-  isActive: boolean;
 }
