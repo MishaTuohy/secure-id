@@ -23,7 +23,7 @@ export function createSupabaseClient(options?: SupabaseClientOptions<any>) {
   const client = new SupabaseClient(SUPABASE_DB_URL, SUPABASE_DB_KEY, options);
 
   return {
-    executeDbCommand: <T>(actionString: string, parameters?: any[]) => dbAction(client, actionString, parameters),
+    executeDbCommand: <T>(actionString: string, parameters?: any[]) => dbAction<T>(client, actionString, parameters),
   };
 }
 

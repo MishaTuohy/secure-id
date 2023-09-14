@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { logger } from '../../utilities/logger';
 import { CustomErrorBase } from '../../utilities/errors/types';
 
-export function errorHandler(err: CustomErrorBase, req: Request, res: Response, next: NextFunction) {
+export function errorHandlerMiddleware(err: CustomErrorBase, req: Request, res: Response, next: NextFunction) {
     const statusCode = err.statusCode || 500;
     const status = err.name || 'error';
 

@@ -6,14 +6,30 @@ import router from './api/router';
 import corsOptions from './config/cors.config';
 import cookieConfig from './config/cookies.config';
 import helmetConfig from './config/helmet.config';
+import { ILogger } from './utilities/logger/types';
+import { loggerMiddleware } from './middleware/logging';
+import { errorHandlerMiddleware } from './middleware/errorHandler';
+import { verifyTokenMiddleware } from './middleware/tokenVerification';
 
-const app: Express = express();
+interface ServerOptions {
+    logger: ILogger;
+}
 
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(cookieConfig.secret));
-app.use(helmet(helmetConfig));
-app.use('/v1', router);
+export const createServer = (options: ServerOptions): Express => {
+    const server: Express = express();
 
-export { app };
+    server.use(cors(corsOptions));
+    server.use(helmet(helmetConfig));
+    server.use(express.json());
+    server.use(express.urlencoded({ extended: true }));
+    
+    server.use(cookieParser(cookieConfig.secret));
+    server.use(loggerMiddleware(options.logger));
+    server.use(verifyTokenMiddleware);
+
+    server.use('/v1', router);
+
+    server.use(errorHandlerMiddleware);
+
+    return server;
+}

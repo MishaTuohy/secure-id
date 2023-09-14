@@ -3,15 +3,23 @@
 // or
 // import { db } from '../database'; 
 
+import { createSupabaseClient } from "../../database";
+import { User } from "../../models/User";
+import { NotFoundError } from "../../utilities/errors";
+
 export function createUser(userData: any) {
     // Directly interact with your ORM or database here
     // e.g., return User.create(userData);
     return "Not Implemented";
 }
 
-export function getUserById(userId: string) {
-    // e.g., return User.findById(userId);
-    return "Not Implemented";
+export async function getUserById(userId: string): Promise<User> {
+    const client = createSupabaseClient();
+    const response = await client.executeDbCommand<User>('getUserById', [userId]);
+    
+    if (!response.data) throw NotFoundError(`User with ID ${userId} not found`);
+    
+    return response.data;
 }
 
 export function updateUserById(userId: string, profileData: any) {
