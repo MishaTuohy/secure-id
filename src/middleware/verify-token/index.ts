@@ -1,10 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
 
+// Placeholder function to verify the token in the future
+const verifyBearerToken = (token: string): boolean => {
+    // In the future, implement the actual token verification logic here.
+    // For now, it just returns true.
+    return true;
+};
+
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    // For now, we're allowing everything to pass through.
-    // In a real-world scenario, you'd verify the token attached with the request, either in the headers or the body.
-    
-    next();
+    const authHeader = req.headers.authorization;
+
+    if (authHeader) {
+        const tokenParts = authHeader.split(' ');
+        if (tokenParts.length === 2 && tokenParts[0] === 'Bearer') {
+            const token = tokenParts[1];
+            if (verifyBearerToken(token)) {
+                next();
+                return;
+            }
+        }
+    }
+    res.status(401).json({ message: 'Unauthorized' });
 };
 
 export default verifyToken;

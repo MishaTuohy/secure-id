@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(cookieConfig.secret));
 app.use(helmet(helmetConfig));
-
 app.use('/v1', router);
 
 export { app };
