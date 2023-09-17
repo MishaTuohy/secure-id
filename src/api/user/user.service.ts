@@ -3,7 +3,7 @@
 // or
 // import { db } from '../database'; 
 
-import { createSupabaseClient } from "../../database";
+import { createSupabaseClient } from "../../database/client";
 import { User } from "../../models/User";
 import { NotFoundError } from "../../utilities/errors";
 

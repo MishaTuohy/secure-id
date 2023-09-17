@@ -3,9 +3,10 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "start": "bun run --hot src/index.ts",
+    "start": "bun run src/index.ts",
     "serve": "bunx serve build",
-    "bundle": "bun build src/index.ts --outdir ./build"
+    "bundle": "bun build src/index.ts --outdir ./build",
+    "schema:update": "supabase gen types typescript --project-id tydawjczkunydhodqagr --schema public > ./src/database/schema.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.4",
