@@ -1,5 +1,7 @@
+import "reflect-metadata";
 import { createServer } from './server';
 import { logger } from './utilities/logger';
+import { db } from "./database";
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,15 +18,19 @@ const gracefulShutdown = (signal: string, serverInstance: any) => {
   });
 };
 
-const app = createServer({ logger });
-const serverInstance = app.listen(PORT);
+(async () => {
+    await db.initialize();
 
-process.on('SIGINT', () => {
-  gracefulShutdown('SIGINT', serverInstance);
-});
+    const app = createServer({ logger });
+    const serverInstance = app.listen(PORT, () => {
+        logger.info(`Server listening on port ${PORT}`);
+    });
 
-process.on('SIGTERM', () => {
-  gracefulShutdown('SIGTERM', serverInstance);
-});
+    process.on('SIGINT', () => {
+      gracefulShutdown('SIGINT', serverInstance);
+    });
 
-logger.info(`Server listening on port ${PORT}`);
+    process.on('SIGTERM', () => {
+      gracefulShutdown('SIGTERM', serverInstance);
+    });
+})();

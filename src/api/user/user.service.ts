@@ -3,23 +3,31 @@
 // or
 // import { db } from '../database'; 
 
-import { createSupabaseClient } from "../../database/client";
+import { db } from "../../database";
 import { User } from "../../models/User";
 import { NotFoundError } from "../../utilities/errors";
 
-export function createUser(userData: any) {
-    // Directly interact with your ORM or database here
-    // e.g., return User.create(userData);
-    return "Not Implemented";
+export async function createUser(userData: any): Promise<User[]> {
+    const userRepository = db.getRepository(User);
+    const newUser = userRepository.create(userData);
+    
+    await userRepository.save(newUser);
+    
+    return newUser;
 }
 
-export async function getUserById(userId: string): Promise<User> {
-    const client = createSupabaseClient();
-    const response = await client.executeDbCommand<User>('getUserById', [userId]);
+export async function getUserById(userId: number): Promise<User> {
+    const userRepository = db.getRepository(User);
+    const user = await userRepository.findOne({ where: { id: userId } });
     
-    if (!response.data) throw NotFoundError(`User with ID ${userId} not found`);
+    if (!user) throw NotFoundError(`User with ID ${userId} not found`);
     
-    return response.data;
+    return user;
+}
+
+export async function getAllUsers(): Promise<User[]> {
+    const userRepository = db.getRepository(User);
+    return await userRepository.find();
 }
 
 export function updateUserById(userId: string, profileData: any) {

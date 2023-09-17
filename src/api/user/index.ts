@@ -6,24 +6,32 @@ import {
     deleteUserById,
     getUserRolesById,
     assignRoleToUser,
-    removeRoleFromUser
+    removeRoleFromUser,
+    getAllUsers
 } from './user.service';
+import { validate } from '../../middleware/validate';
+import { createUserSchema, updateUserSchema } from './user.validation';
 
 const userRouter: Router = express.Router();
 
-userRouter.post('/', (req, res) => {
+userRouter.post('/', validate(createUserSchema), (req, res) => {
     const userData = req.body;
     const newUser = createUser(userData);
     res.send(newUser);
 });
 
+userRouter.get('/', (req, res) => {
+    const users = getAllUsers();
+    res.send(users);
+});
+
 userRouter.get('/:userId', (req, res) => {
-    const userId = req.params.userId;
+    const userId = Number(req.params.userId);
     const userProfile = getUserById(userId);
     res.send(userProfile);
 });
 
-userRouter.put('/:userId', (req, res) => {
+userRouter.put('/:userId', validate(updateUserSchema), (req, res) => {
     const userId = req.params.userId;
     const profileData = req.body;
     const updatedProfile = updateUserById(userId, profileData);
@@ -43,7 +51,7 @@ userRouter.get('/:userId/roles', (req, res) => {
     res.send(roles);
 });
 
-userRouter.post('/:userId/roles', (req, res) => {
+userRouter.post('/:userId/roles', validate(updateUserSchema), (req, res) => {
     const userId = req.params.userId;
     const roles = req.body.roles;
     const assignmentStatus = assignRoleToUser(userId, roles);
