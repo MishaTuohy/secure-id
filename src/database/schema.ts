@@ -94,7 +94,20 @@ export interface Database {
           permissionId?: number
           roleId?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "RolePermission_permissionId_fkey"
+            columns: ["permissionId"]
+            referencedRelation: "Permission"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "RolePermission_roleId_fkey"
+            columns: ["roleId"]
+            referencedRelation: "Role"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       Token: {
         Row: {
@@ -127,7 +140,14 @@ export interface Database {
           tokenType?: string | null
           userId?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "Token_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       User: {
         Row: {
@@ -178,7 +198,20 @@ export interface Database {
           scopes?: string
           userId?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "UserOAuthGrant_clientId_fkey"
+            columns: ["clientId"]
+            referencedRelation: "OAuthClient"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "UserOAuthGrant_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       UserRole: {
         Row: {
@@ -199,7 +232,20 @@ export interface Database {
           roleId?: number
           userId?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "UserRole_roleId_fkey"
+            columns: ["roleId"]
+            referencedRelation: "Role"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "UserRole_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
