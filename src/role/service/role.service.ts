@@ -3,19 +3,31 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RoleService {
-  createRole(roleData: any): Promise<any> {
-    throw new Error('Not Implemented');
+  async createRole(roleData: any): Promise<any> {
+    throw new Error('Not implemented.');
   }
 
-  getRoleById(id: string): Promise<any> {
-    throw new Error('Not Implemented');
+  async getRoleById(id: string): Promise<any> {
+    throw new Error('Not implemented.');
   }
 
-  updateRole(id: string, roleData: any): Promise<any> {
-    throw new Error('Not Implemented');
+  async updateRoleById(id: string, updateData: any): Promise<any> {
+    throw new Error('Not implemented.');
   }
 
-  deleteRole(id: string): Promise<any> {
-    throw new Error('Not Implemented');
+  async deleteRoleById(id: string): Promise<any> {
+    throw new Error('Not implemented.');
+  }
+
+  async getUsersWithRole(id: string): Promise<any> {
+    throw new Error('Not implemented.');
+  }
+
+  async assignUserToRole(id: string, userData: any): Promise<any> {
+    throw new Error('Not implemented.');
+  }
+
+  async removeUserFromRole(id: string, userData: any): Promise<any> {
+    throw new Error('Not implemented.');
   }
 }

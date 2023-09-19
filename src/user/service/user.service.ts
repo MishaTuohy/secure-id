@@ -18,16 +18,4 @@ export class UserService {
   deleteUserById(id: string): any {
     throw new NotImplementedException();
   }
-
-  getUserRolesById(id: string): any {
-    throw new NotImplementedException();
-  }
-
-  assignRoleToUser(id: string, roleData: any): any {
-    throw new NotImplementedException();
-  }
-
-  removeRoleFromUser(id: string, roleData: any): any {
-    throw new NotImplementedException();
-  }
 }

@@ -35,25 +35,4 @@ export class UserController {
   async deleteUserById(@Param('id') id: string): Promise<any> {
     return this.userService.deleteUserById(id);
   }
-
-  @Get(':id/roles')
-  async getUserRolesById(@Param('id') id: string): Promise<any> {
-    return this.userService.getUserRolesById(id);
-  }
-
-  @Put(':id/roles')
-  async assignRoleToUser(
-    @Param('id') id: string,
-    @Body() roleData: any,
-  ): Promise<any> {
-    return this.userService.assignRoleToUser(id, roleData);
-  }
-
-  @Delete(':id/roles')
-  async removeRoleFromUser(
-    @Param('id') id: string,
-    @Body() roleData: any,
-  ): Promise<any> {
-    return this.userService.removeRoleFromUser(id, roleData);
-  }
 }
